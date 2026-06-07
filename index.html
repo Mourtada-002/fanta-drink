@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fanta - Audacieusement Orange, Plus d'Effervescence</title>
+    <meta name="description" content="Plongez dans un monde de bulles audacieuses et de saveurs de fruits intenses. Trouvez votre vibe Fanta aujourd'hui.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        fantaOrange: {
+                            light: '#ffb74d',
+                            DEFAULT: '#ff7c00',
+                            dark: '#e64a19',
+                        },
+                        fantaGrape: {
+                            light: '#ba68c8',
+                            DEFAULT: '#7b1fa2',
+                            dark: '#4a148c',
+                        },
+                        fantaLemon: {
+                            light: '#e6ee9c',
+                            DEFAULT: '#cddc39',
+                            dark: '#afb42b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Custom Core CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased selection:bg-white selection:text-black">
+
+    <!-- 1. Gradient Backgrounds for Smooth Flavor Transitions -->
+    <div id="bg-orange" class="fixed inset-0 w-full h-full bg-gradient-to-br from-[#ff8f00] via-[#ff6f00] to-[#d84315] opacity-100 z-[-20] transition-opacity duration-1000"></div>
+    <div id="bg-grape"  class="fixed inset-0 w-full h-full bg-gradient-to-br from-[#6a1b9a] via-[#4a148c] to-[#280654] opacity-0 z-[-20] transition-opacity duration-1000"></div>
+    <div id="bg-lemon"  class="fixed inset-0 w-full h-full bg-gradient-to-br from-[#afb42b] via-[#9e9d24] to-[#33691e] opacity-0 z-[-20] transition-opacity duration-1000"></div>
+
+    <!-- 2. Dark Overlay -->
+    <div class="fixed inset-0 w-full h-full bg-black/40 z-[-15] pointer-events-none"></div>
+
+    <!-- 3. Floating Bubbles Background Canvas -->
+    <canvas id="bubble-canvas" class="fixed inset-0 w-full h-full z-[-10] pointer-events-none"></canvas>
+
+    <!-- 4. Fanta Can PNG — Animated by GSAP ScrollTrigger -->
+    <div id="can-img-container">
+        <img id="can-img" src="assets/fanta-can.png" alt="Canette Fanta Orange">
+    </div>
+
+    <!-- 5. Header / Navigation with Official-Style Fanta Logo -->
+    <header class="fixed top-0 left-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+
+            <!-- OFFICIAL-STYLE FANTA LOGO (SVG) -->
+            <a href="#" class="flex items-center" aria-label="Fanta accueil">
+                <svg class="fanta-logo-svg" viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo Fanta">
+                    <title>Fanta</title>
+                    <!-- Dark navy blob background (official Fanta style) -->
+                    <ellipse cx="108" cy="36" rx="105" ry="31" fill="#0a2342"/>
+                    <ellipse cx="90" cy="30" rx="90" ry="27" fill="#0a2342"/>
+                    <ellipse cx="125" cy="42" rx="88" ry="25" fill="#0a2342"/>
+                    <!-- Green leaf top-right -->
+                    <g transform="translate(180, 6) rotate(35)">
+                        <ellipse cx="0" cy="0" rx="30" ry="14" fill="#1b5e20"/>
+                        <ellipse cx="-2" cy="-3" rx="22" ry="7" fill="#43a047"/>
+                        <line x1="-28" y1="0" x2="28" y2="0" stroke="#0d3c0d" stroke-width="3"/>
+                    </g>
+                    <!-- White italic Fanta text -->
+                    <text
+                        x="108" y="50"
+                        text-anchor="middle"
+                        font-family="Outfit, Arial Black, sans-serif"
+                        font-size="40"
+                        font-weight="900"
+                        font-style="italic"
+                        fill="white"
+                        letter-spacing="-1"
+                    >Fanta</text>
+                    <!-- Orange dot (brand accent) -->
+                    <circle cx="195" cy="52" r="5" fill="var(--theme-primary)"/>
+                </svg>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wider uppercase">
+                <a href="#hero"     class="text-white hover:text-[var(--theme-primary)] transition-colors duration-300">Accueil</a>
+                <a href="#features" class="text-white hover:text-[var(--theme-primary)] transition-colors duration-300">Recette</a>
+                <a href="#picker"   class="text-white hover:text-[var(--theme-primary)] transition-colors duration-300">Saveurs</a>
+                <a href="#stats"    class="text-white hover:text-[var(--theme-primary)] transition-colors duration-300">Stats</a>
+            </nav>
+
+            <a href="#picker" class="theme-bg px-6 py-2.5 rounded-full text-sm font-bold tracking-wider uppercase text-white hover:scale-105 transition-all duration-300 theme-shadow">
+                Choisir son Vibe
+            </a>
+        </div>
+    </header>
+
+    <!-- 6. Page Wrapper — all scroll sections -->
+    <div id="page-wrapper" class="relative w-full z-30">
+
+        <!-- SECTION 1: HÉROS -->
+        <section id="hero" class="min-h-screen flex items-center px-6 pt-24 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 w-full gap-12 items-center">
+                <!-- Left: Titre & Call-to-action -->
+                <div class="flex flex-col gap-6 z-35 max-w-xl -mt-16">
+
+                    <h1 class="text-5xl md:text-8xl font-extrabold tracking-tight leading-none text-white uppercase">
+                        Goûte<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-orange-100 to-[var(--theme-primary)] transition-all duration-500 font-black">
+                            L'INCROYABLE.
+                        </span>
+                    </h1>
+                    <p class="text-base md:text-lg text-white/80 leading-relaxed font-light">
+                        Plonge dans un monde de bulles audacieuses et de saveurs de fruits intenses qui éveillent tes sens. Faite avec de vrais jus de fruits et une effervescence explosive. Trouve ton vibe aujourd'hui.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <a href="#picker" class="theme-bg text-white font-bold px-8 py-4 rounded-full tracking-wider uppercase text-sm hover:scale-105 transition-all duration-300 theme-shadow flex items-center gap-2">
+                            Explorer les Saveurs
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                        </a>
+                        <a href="#features" class="glass-panel text-white font-bold px-8 py-4 rounded-full tracking-wider uppercase text-sm hover:bg-white/10 hover:scale-105 transition-all duration-300">
+                            La Science
+                        </a>
+                    </div>
+                </div>
+                <!-- Right: Espace pour la canette PNG -->
+                <div class="h-[300px] md:h-[600px] w-full pointer-events-none"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: L'EXPÉRIENCE / RECETTE -->
+        <section id="features" class="min-h-screen flex items-center px-6 py-20 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 w-full gap-12 items-center">
+                <!-- Left: Espace pour la canette -->
+                <div class="h-[300px] md:h-[600px] w-full order-2 md:order-1 pointer-events-none"></div>
+                <!-- Right: Cartes de détails -->
+                <div class="flex flex-col gap-8 order-1 md:order-2 z-35">
+                    <div class="flex flex-col gap-3">
+                        <h2 class="text-xs uppercase tracking-widest text-[var(--theme-primary)] font-bold transition-colors duration-500">Recette Premium</h2>
+                        <h3 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Éveille tes Sens</h3>
+                        <p class="text-white/70 font-light max-w-md">Qu'est-ce qui rend Fanta si irrésistiblement bon ? Nous équilibrons de vraies pulpes de fruits naturels avec notre effervescence signature qui fait fourmiller la langue.</p>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <!-- Carte 1 -->
+                        <div class="glass-panel p-6 rounded-2xl theme-glow-border flex gap-5 items-start">
+                            <div class="theme-bg p-3.5 rounded-xl text-white font-bold text-xl theme-shadow shrink-0">🍊</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Jus de Fruit Explosif</h4>
+                                <p class="text-sm text-white/70">Des agrumes mûris au soleil pressés dans chaque batch pour garantir une explosion fruitée dès la première gorgée.</p>
+                            </div>
+                        </div>
+                        <!-- Carte 2 -->
+                        <div class="glass-panel p-6 rounded-2xl theme-glow-border flex gap-5 items-start">
+                            <div class="theme-bg p-3.5 rounded-xl text-white font-bold text-xl theme-shadow shrink-0">⚡</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Pétillance Intense</h4>
+                                <p class="text-sm text-white/70">La quantité parfaite de carbonatation qui procure le classique picotement Fanta tout au long de la gorge.</p>
+                            </div>
+                        </div>
+                        <!-- Carte 3 -->
+                        <div class="glass-panel p-6 rounded-2xl theme-glow-border flex gap-5 items-start">
+                            <div class="theme-bg p-3.5 rounded-xl text-white font-bold text-xl theme-shadow shrink-0">🍃</div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Zéro Conservateur</h4>
+                                <p class="text-sm text-white/70">Couleurs et arômes naturels uniquement. Une célébration de l'excitation pure sans compromis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: SÉLECTEUR DE SAVEURS (INTERACTIF) -->
+        <section id="picker" class="min-h-screen flex items-center px-6 py-20 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 w-full gap-12 items-center">
+                <!-- Left: Contrôles de sélection de saveur -->
+                <div class="flex flex-col gap-6 z-35 max-w-xl">
+                    <div class="flex flex-col gap-3">
+                        <h2 class="text-xs uppercase tracking-widest text-[var(--theme-primary)] font-bold transition-colors duration-500">Laboratoire Interactif</h2>
+                        <h3 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight">Choisis ton Vibe</h3>
+                        <p class="text-white/70 font-light">Change de saveur instantanément. Regarde la canette tourner, le fond changer et les bulles se métamorphoser selon ton profil gustatif.</p>
+                    </div>
+
+                    <!-- Boutons de saveur -->
+                    <div class="flex flex-col gap-4 mt-2">
+                        <!-- Bouton 1 : Orange -->
+                        <button onclick="selectFlavor('orange')" id="btn-orange" class="flavor-btn flex items-center justify-between p-5 rounded-2xl glass-panel border border-orange-500/30 hover:border-orange-500/80 transition-all duration-300 w-full group relative overflow-hidden bg-white/5">
+                            <div class="flex items-center gap-4">
+                                <span class="w-10 h-10 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 flex items-center justify-center text-lg shadow-lg">🍊</span>
+                                <div class="text-left">
+                                    <h4 class="font-extrabold text-white text-lg group-hover:text-orange-400 transition-colors duration-300">Orange Originale</h4>
+                                    <p class="text-xs text-white/60">Classique, Intense, Pétillant</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-orange-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                Actif <span class="arrow-indicator">➔</span>
+                            </span>
+                        </button>
+
+                        <!-- Bouton 2 : Raisin -->
+                        <button onclick="selectFlavor('grape')" id="btn-grape" class="flavor-btn flex items-center justify-between p-5 rounded-2xl glass-panel border border-white/10 hover:border-purple-500/80 transition-all duration-300 w-full group relative overflow-hidden">
+                            <div class="flex items-center gap-4">
+                                <span class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-indigo-700 flex items-center justify-center text-lg shadow-lg">🍇</span>
+                                <div class="text-left">
+                                    <h4 class="font-extrabold text-white text-lg group-hover:text-purple-400 transition-colors duration-300">Raisin Sauvage</h4>
+                                    <p class="text-xs text-white/60">Profond, Sucré, Électrisant</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                                Sélectionner <span class="arrow-indicator">➔</span>
+                            </span>
+                        </button>
+
+                        <!-- Bouton 3 : Citron -->
+                        <button onclick="selectFlavor('lemon')" id="btn-lemon" class="flavor-btn flex items-center justify-between p-5 rounded-2xl glass-panel border border-white/10 hover:border-lime-500/80 transition-all duration-300 w-full group relative overflow-hidden">
+                            <div class="flex items-center gap-4">
+                                <span class="w-10 h-10 rounded-full bg-gradient-to-r from-yellow-400 to-lime-500 flex items-center justify-center text-lg shadow-lg">🍋</span>
+                                <div class="text-left">
+                                    <h4 class="font-extrabold text-white text-lg group-hover:text-lime-400 transition-colors duration-300">Citron Zesté</h4>
+                                    <p class="text-xs text-white/60">Acidulé, Rafraîchissant, Étincelle Citronnée</p>
+                                </div>
+                            </div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-lime-400 flex items-center gap-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+                                Sélectionner <span class="arrow-indicator">➔</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Right: Espace pour la canette -->
+                <div class="h-[300px] md:h-[600px] w-full pointer-events-none"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: STATISTIQUES -->
+        <section id="stats" class="min-h-screen flex items-center px-6 py-20 max-w-7xl mx-auto relative">
+            <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-8 items-center z-35">
+                <!-- Carte gauche -->
+                <div class="glass-panel p-8 rounded-3xl theme-glow-border flex flex-col gap-3 text-center md:text-left">
+                    <span class="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-[var(--theme-primary)] transition-all duration-500">100%</span>
+                    <h4 class="text-xl font-bold text-white">Goût Naturel</h4>
+                    <p class="text-sm text-white/70">De vrais extraits d'essence de fruits mélangés pour créer des saveurs de soda authentiques.</p>
+                </div>
+
+                <!-- Centre : Espace pour la canette en zoom -->
+                <div class="h-[350px] w-full pointer-events-none"></div>
+
+                <!-- Carte droite -->
+                <div class="glass-panel p-8 rounded-3xl theme-glow-border flex flex-col gap-3 text-center md:text-left">
+                    <span class="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-[var(--theme-primary)] transition-all duration-500">0%</span>
+                    <h4 class="text-xl font-bold text-white">Conservateur</h4>
+                    <p class="text-sm text-white/70">Nous enrichissons nos recettes de concentrés d'agrumes frais, pour un arôme naturellement préservé.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: CTA & PIED DE PAGE -->
+        <section id="cta" class="min-h-screen flex flex-col justify-between px-6 py-20 max-w-7xl mx-auto">
+            <!-- Panneau glassmorphique CTA -->
+            <div class="w-full glass-panel rounded-3xl p-8 md:p-16 flex flex-col md:flex-row items-center justify-between gap-12 mt-12 theme-glow-border">
+                <div class="max-w-md flex flex-col gap-4 text-center md:text-left">
+                    <h3 class="text-4xl md:text-6xl font-black text-white leading-none">REJOINS LA NATION <span class="text-[var(--theme-primary)] transition-colors duration-500">FIZZ</span></h3>
+                    <p class="text-white/70 font-light text-sm">Inscris-toi pour un accès anticipé aux éditions limitées, aux collaborations merchandising et aux événements communautaires.</p>
+                </div>
+
+                <!-- Formulaire d'abonnement email -->
+                <div class="w-full max-w-md flex flex-col sm:flex-row gap-3 z-40">
+                    <input type="email" placeholder="Entre ton adresse e-mail" class="w-full px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-[var(--theme-primary)] transition-all text-sm font-semibold">
+                    <button class="theme-bg text-white font-bold px-8 py-4 rounded-full tracking-wider uppercase text-sm hover:scale-105 transition-all duration-300 shadow-lg theme-shadow shrink-0">
+                        S'inscrire
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pied de page -->
+            <footer class="w-full flex flex-col sm:flex-row justify-between items-center border-t border-white/10 pt-12 mt-20 gap-6 text-sm text-white/50 font-light">
+                <div>
+                    <!-- Footer Logo -->
+                    <svg class="h-9 w-auto" viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="108" cy="36" rx="105" ry="31" fill="#0a2342"/>
+                        <ellipse cx="90" cy="30" rx="90" ry="27" fill="#0a2342"/>
+                        <ellipse cx="125" cy="42" rx="88" ry="25" fill="#0a2342"/>
+                        <g transform="translate(180, 6) rotate(35)">
+                            <ellipse cx="0" cy="0" rx="30" ry="14" fill="#1b5e20"/>
+                            <ellipse cx="-2" cy="-3" rx="22" ry="7" fill="#43a047"/>
+                            <line x1="-28" y1="0" x2="28" y2="0" stroke="#0d3c0d" stroke-width="3"/>
+                        </g>
+                        <text x="108" y="50" text-anchor="middle" font-family="Outfit, Arial Black, sans-serif" font-size="40" font-weight="900" font-style="italic" fill="white" letter-spacing="-1">Fanta</text>
+                        <circle cx="195" cy="52" r="5" fill="var(--theme-primary)"/>
+                    </svg>
+                    <p class="mt-2 text-xs">© 2026 The Coca-Cola Company. Tous droits réservés.</p>
+                </div>
+                <div class="flex gap-6 tracking-wide">
+                    <a href="#" class="hover:text-white transition-colors duration-300">Politique de Confidentialité</a>
+                    <a href="#" class="hover:text-white transition-colors duration-300">Conditions d'Utilisation</a>
+                    <a href="#" class="hover:text-white transition-colors duration-300">Nous Contacter</a>
+                </div>
+            </footer>
+        </section>
+
+    </div>
+
+    <!-- 7. Librairies JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- 8. Script principal -->
+    <script src="main.js"></script>
+</body>
+</html>
