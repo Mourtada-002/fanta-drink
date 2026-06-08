@@ -63,7 +63,7 @@ fanta-drink/
 Aucune dépendance à installer. Cloner le repo et ouvrir directement dans un navigateur :
 
 ```bash
-git clone https://github.com/ton-username/fanta-drink.git
+git clone https://github.com/Mourtada-002/fanta-drink.git
 cd fanta-drink
 # Ouvrir index.html dans le navigateur
 # ou avec un live server :
