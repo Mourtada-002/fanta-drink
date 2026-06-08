@@ -113,10 +113,6 @@ G — Initialisation
 
 ## Crédits
 
-- Design & développement — [@ton-username](https://github.com/ton-username)
+- Design & développement — [@Mourtada-002](https://github.com/Mourtada-002)
 - Animations — [GSAP by GreenSock](https://gsap.com/)
 - Fanta est une marque déposée de The Coca-Cola Company — ce projet est un exercice de design personnel, non affilié à la marque.
-
----
-
-*Built with 🍊 and way too much caffeine.*
