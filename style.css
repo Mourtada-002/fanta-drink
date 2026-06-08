@@ -102,11 +102,227 @@
 
         canvas { outline: none; }
 
-        @media (max-width: 767px) {
+        /* --- Mobile menu : masqué par défaut sur tous les écrans --- */
+        .mobile-menu {
+            display: none;
+        }
+
+        /* --- Mobile hamburger btn : masqué par défaut --- */
+        .mobile-nav-btn {
+            display: none;
+        }
+
+        /* ============================================
+           RESPONSIVE — TABLETTE (768px – 1023px)
+           ============================================ */
+        @media (min-width: 768px) and (max-width: 1023px) {
             #can-img-container {
-                width: 200px;
-                height: 310px;
+                width: 260px;
+                height: 400px;
+            }
+
+            /* Navbar : réduire le padding et la taille du bouton */
+            .nav-cta {
+                padding: 8px 18px;
+                font-size: 0.7rem;
+            }
+
+            /* Sections : réduire le padding horizontal */
+            .section-inner {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+
+            /* Spacers canette : réduire la hauteur sur tablette */
+            .can-spacer-tall {
+                height: 260px;
+            }
+            .can-spacer-stats {
+                height: 200px;
+            }
+
+            /* Stats : réduire la taille des chiffres */
+            .stat-number {
+                font-size: 3.5rem;
+            }
+
+            /* Hero : réduire le h1 sur tablette */
+            #hero h1 {
+                font-size: 3.8rem;
+                line-height: 1.0;
+            }
+
+            /* CTA : la canette fixée chevauche le formulaire — on passe en colonne
+               et on donne de l'espace pour que la canette ne coupe pas le contenu */
+            #cta .cta-panel {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 2.5rem 2rem;
+                gap: 2rem;
+            }
+            #cta .cta-panel > div:first-child {
+                max-width: 100%;
+            }
+            #cta .cta-panel > div:first-child h3 {
+                font-size: 2.8rem;
+            }
+            /* Décaler le formulaire vers la gauche pour éviter la canette fixée */
+            #cta .cta-panel > div:last-child {
+                max-width: 80%;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE — MOBILE (< 768px)
+           ============================================ */
+        @media (max-width: 767px) {
+
+            /* --- Canette fixée --- */
+            #can-img-container {
+                width: 170px;
+                height: 265px;
                 left: 50%;
-                top: 32%;
+                top: 28%;
+                transform: translate(-50%, -50%);
+            }
+
+            /* --- Navbar --- */
+            .mobile-nav-btn {
+                display: flex;
+            }
+            .desktop-nav-cta {
+                display: none;
+            }
+
+            /* --- Hero : canette au-dessus, texte en dessous --- */
+            #hero {
+                padding-top: 5rem;
+                align-items: flex-end;
+                padding-bottom: 3rem;
+                overflow: hidden;
+            }
+            #hero .hero-content {
+                margin-top: 0;
+                max-width: 100%;
+                padding-top: 220px;
+            }
+            #hero h1 {
+                font-size: 2.4rem;
+                line-height: 1.05;
+                word-break: break-word;
+            }
+            #hero .hero-spacer {
+                display: none;
+            }
+            #hero .hero-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            #hero .hero-buttons a {
+                text-align: center;
+                justify-content: center;
+            }
+
+            /* --- Section Features --- */
+            #features .can-spacer-tall {
+                height: 180px;
+            }
+
+            /* --- Section Picker --- */
+            #picker .picker-spacer {
+                display: none;
+            }
+            #picker {
+                padding-top: 5rem;
+                padding-bottom: 4rem;
+            }
+            #picker .picker-content {
+                padding-top: 190px;
+            }
+            #picker h3 {
+                font-size: 2.4rem;
+            }
+
+            /* --- Section Stats --- */
+            #stats .stats-can-spacer {
+                height: 160px;
+            }
+            #stats .stat-number {
+                font-size: 3rem;
+            }
+
+            /* --- Section CTA --- */
+            #cta h3 {
+                font-size: 2rem;
+                line-height: 1.1;
+            }
+            #cta .cta-panel {
+                padding: 2rem 1.5rem;
+                margin-top: 1.5rem;
+            }
+
+            /* --- Footer --- */
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+                text-align: center;
+            }
+
+            /* --- Cartes feature : padding réduit --- */
+            .glass-panel.feature-card {
+                padding: 1rem 1rem;
+            }
+            .glass-panel.feature-card p {
+                font-size: 0.78rem;
+            }
+
+            /* --- Boutons saveur : padding réduit --- */
+            .flavor-btn {
+                padding: 0.85rem 1rem;
+            }
+            .flavor-btn h4 {
+                font-size: 0.95rem;
+            }
+
+            /* --- Menu mobile hamburger --- */
+            .mobile-menu {
+                display: none;
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                z-index: 49;
+                background: rgba(11, 5, 0, 0.97);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 1.5rem 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+            .mobile-menu.open {
+                display: flex;
+            }
+            .mobile-menu a {
+                color: white;
+                font-size: 1.1rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                padding: 0.6rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.07);
+                transition: color 0.3s;
+            }
+            .mobile-menu a:last-child {
+                border-bottom: none;
+                margin-top: 0.5rem;
+                background: var(--theme-primary);
+                text-align: center;
+                padding: 0.8rem 1rem;
+                border-radius: 999px;
+            }
+            .mobile-menu a:hover {
+                color: var(--theme-primary);
             }
         }

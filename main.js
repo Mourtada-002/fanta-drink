@@ -1,19 +1,29 @@
-// --- SECTION A: REGISTRE GSAP ---
+// --- REGISTRE GSAP ---
         gsap.registerPlugin(ScrollTrigger);
 
         const canContainer = document.getElementById('can-img-container');
         const canImg       = document.getElementById('can-img');
 
         const isMobile = () => window.innerWidth < 768;
+        const isTablet = () => window.innerWidth >= 768 && window.innerWidth < 1024;
 
         function getPositions() {
             if (isMobile()) {
                 return {
-                    hero:     { left: '50%', top: '30%',  w: 200, h: 310, rot:  0,   scale: 1.0 },
-                    section2: { left: '50%', top: '30%',  w: 190, h: 295, rot:  6,   scale: 0.95 },
-                    section3: { left: '50%', top: '32%',  w: 205, h: 315, rot: -4,   scale: 1.0 },
-                    section4: { left: '50%', top: '40%',  w: 230, h: 355, rot:  2,   scale: 1.15 },
-                    section5: { left: '50%', top: '28%',  w: 180, h: 280, rot: -5,   scale: 0.88 },
+                    hero:     { left: '50%', top: '28%',  w: 170, h: 265, rot:  0,   scale: 1.0 },
+                    section2: { left: '50%', top: '28%',  w: 160, h: 248, rot:  6,   scale: 0.95 },
+                    section3: { left: '50%', top: '28%',  w: 175, h: 272, rot: -4,   scale: 1.0 },
+                    section4: { left: '50%', top: '38%',  w: 195, h: 302, rot:  2,   scale: 1.1 },
+                    section5: { left: '50%', top: '26%',  w: 155, h: 240, rot: -5,   scale: 0.88 },
+                };
+            }
+            if (isTablet()) {
+                return {
+                    hero:     { left: '70%', top: '50%',  w: 260, h: 400, rot:  3,   scale: 1.0  },
+                    section2: { left: '30%', top: '48%',  w: 240, h: 370, rot: -5,   scale: 0.93 },
+                    section3: { left: '70%', top: '50%',  w: 265, h: 408, rot:  4,   scale: 1.02 },
+                    section4: { left: '50%', top: '50%',  w: 295, h: 455, rot:  0,   scale: 1.15 },
+                    section5: { left: '68%', top: '45%',  w: 225, h: 348, rot: -7,   scale: 0.87 },
                 };
             }
             return {
@@ -40,7 +50,7 @@
 
             // Retire l'animation précédente si présente
             canImg.classList.remove('idle-float', 'spinning');
-            void canImg.offsetWidth; // reflow
+            void canImg.offsetWidth;
 
             // Animation d'entrée en chute
             canImg.classList.add('drop-in');
@@ -50,7 +60,7 @@
             }, { once: true });
         });
 
-        // --- SECTION D: GSAP SCROLLTRIGGER POUR LA CANETTE ---
+        // --- GSAP SCROLLTRIGGER POUR LA CANETTE ---
         function setupScrollAnimations() {
             ScrollTrigger.getAll().forEach(t => t.kill());
 
